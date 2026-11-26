@@ -1,10 +1,650 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Invitación Laura & Marcos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laura &amp; Marcos · Nuestra Boda</title>
+<meta name="description" content="Invitación de boda de Laura & Marcos. Un pacto bajo el mismo cielo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   PALETA Y TIPOGRAFÍA
+   ========================================================= */
+:root{
+  --midnight:#050d1c;
+  --deep:#0a1a33;
+  --deep-2:#0b2141;
+  --sky:#dcecfb;
+  --silver:#c8d4e0;
+  --silver-hi:#eef3f8;
+  --ink:#e9f1fa;
+  --muted:#9db2c8;
+  --serif:'Cinzel',Georgia,serif;
+  --body:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--midnight)}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:var(--midnight);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+body.locked{overflow:hidden}
+img{max-width:100%;display:block}
+
+/* =========================================================
+   PORTADA: NOCHE, ESTRELLAS, SOBRE Y SELLO
+   ========================================================= */
+.intro{
+  position:fixed;inset:0;z-index:60;
+  display:grid;place-items:center;
+  background:radial-gradient(120% 100% at 50% 0%,#12305a 0%,#0a1c36 48%,#050d1c 100%);
+  overflow:hidden;
+  transition:opacity .9s ease;
+}
+.intro.gone{opacity:0;pointer-events:none}
+
+.stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.stars span{
+  position:absolute;border-radius:50%;background:#fff;
+  box-shadow:0 0 6px rgba(255,255,255,.85);
+  animation:twinkle 5s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.22;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.18)}
+}
+
+/* Sobre / tarjeta */
+.envelope{
+  position:relative;
+  width:min(440px,84vw);
+  height:min(590px,72vh);
+  border-radius:6px;
+  box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(200,212,224,.25);
+}
+.half{
+  position:absolute;top:0;height:100%;width:50%;
+  background:linear-gradient(160deg,#f7fbff 0%,#e4effb 55%,#cfe1f2 100%);
+  transition:transform 1.05s cubic-bezier(.7,.02,.85,.55),opacity .55s ease .55s;
+  will-change:transform;
+}
+.half.left{left:0;border-radius:6px 0 0 6px;box-shadow:inset -1px 0 0 rgba(150,175,200,.55)}
+.half.right{right:0;border-radius:0 6px 6px 0}
+
+/* Constelación sobre el papel */
+.constel{
+  position:absolute;inset:0;width:100%;height:100%;
+  opacity:.5;pointer-events:none;transition:opacity .35s ease;
+}
+
+/* Sello plateado */
+.seal{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:132px;height:132px;border-radius:50%;border:none;cursor:pointer;
+  display:grid;place-items:center;z-index:4;
+  color:#2a3d54;
+  background:radial-gradient(circle at 32% 28%,#fbfdff 0%,#e5edf5 26%,#bccadb 62%,#8ea2b7 100%);
+  box-shadow:0 14px 30px rgba(0,0,0,.42),
+             inset 0 2px 6px rgba(255,255,255,.9),
+             inset 0 -6px 14px rgba(115,135,158,.55);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.seal:hover{transform:translate(-50%,-50%) scale(1.045);box-shadow:0 18px 36px rgba(0,0,0,.5),0 0 40px rgba(200,225,250,.45),inset 0 2px 6px rgba(255,255,255,.9),inset 0 -6px 14px rgba(115,135,158,.55)}
+.seal::after{
+  content:"";position:absolute;inset:9px;border-radius:50%;
+  border:1px dashed rgba(60,85,110,.35);
+}
+.seal .monogram{font-family:var(--serif);font-size:2rem;letter-spacing:.06em;line-height:1}
+.seal .monogram .amp{font-family:var(--body);font-style:italic;font-size:.85em;padding:0 .1em}
+
+/* Animación del sello rompiéndose */
+@keyframes sealBreak{
+  0%{transform:translate(-50%,-50%) scale(1);opacity:1}
+  35%{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 0 70px 26px rgba(220,240,255,.9),inset 0 2px 6px rgba(255,255,255,.9)}
+  100%{transform:translate(-50%,-50%) scale(.55);opacity:0;filter:blur(6px)}
+}
+.intro.opening .seal{animation:sealBreak .55s ease-out forwards;pointer-events:none}
+.intro.opening .constel{opacity:0}
+
+/* Las dos mitades se abren */
+.intro.opening .half.left{transform:translateX(-118%) rotate(-8deg);opacity:0}
+.intro.opening .half.right{transform:translateX(118%) rotate(8deg);opacity:0}
+
+/* Resplandor central que se expande */
+.glow{
+  position:absolute;left:50%;top:50%;
+  width:70vmax;height:70vmax;border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:radial-gradient(circle,#ffffff 0%,#e9f4ff 30%,rgba(200,225,250,.55) 55%,rgba(200,225,250,0) 72%);
+  opacity:0;pointer-events:none;z-index:5;
+  transition:transform 1.3s cubic-bezier(.2,.7,.3,1),opacity .9s ease;
+}
+.glow.on{transform:translate(-50%,-50%) scale(1);opacity:1}
+
+/* Indicación para presionar */
+.hint{
+  position:absolute;bottom:7vh;left:0;right:0;margin:0;text-align:center;
+  font-family:var(--sans);font-size:.68rem;letter-spacing:.38em;
+  text-transform:uppercase;color:#cfdcea;opacity:.85;
+  animation:pulse 2.8s ease-in-out infinite;transition:opacity .4s ease;
+}
+.hint.off{opacity:0}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.95}}
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+   ========================================================= */
+.main{position:relative;z-index:1}
+
+.hero{
+  position:relative;min-height:100svh;
+  display:grid;place-items:center;text-align:center;
+  padding:clamp(3rem,8vh,6rem) 1.25rem;
+  overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 0%,#12305a 0%,#0a1c36 50%,#050d1c 100%);
+}
+.hero .wrap{
+  position:relative;z-index:2;
+  display:grid;gap:clamp(.9rem,2.2vh,1.5rem);justify-items:center;
+  max-width:840px;
+}
+
+/* Aparición escalonada al abrir la carta */
+.hero .fade{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+body.revealed .hero .fade{opacity:1;transform:none}
+.hero .fade:nth-child(1){transition-delay:.05s}
+.hero .fade:nth-child(2){transition-delay:.15s}
+.hero .fade:nth-child(3){transition-delay:.28s}
+.hero .fade:nth-child(4){transition-delay:.4s}
+.hero .fade:nth-child(5){transition-delay:.5s}
+.hero .fade:nth-child(6){transition-delay:.6s}
+.hero .fade:nth-child(7){transition-delay:.7s}
+
+.eyebrow{
+  margin:0;font-family:var(--sans);font-size:.66rem;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--muted);
+}
+.names{
+  margin:0;font-family:var(--serif);font-weight:400;
+  font-size:clamp(2.1rem,7.5vw,4.5rem);line-height:1.12;letter-spacing:.05em;
+}
+.names .amp{font-family:var(--body);font-style:italic;color:#dbe7f3;font-size:.72em;padding:0 .16em}
+.verse{
+  margin:0;max-width:46ch;font-family:var(--body);
+  font-size:clamp(1rem,2.4vw,1.2rem);line-height:1.72;color:#d3e2f2;
+}
+.verse span{
+  display:block;margin-top:.85rem;font-family:var(--sans);
+  font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+}
+.rule{width:120px;height:1px;background:linear-gradient(90deg,transparent,#c8d4e0,transparent);opacity:.75}
+.date{margin:0;font-family:var(--body);font-size:clamp(1.05rem,2.6vw,1.35rem)}
+.place{
+  margin:0;font-family:var(--sans);font-size:.76rem;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
+}
+
+/* Cuenta regresiva */
+.countdown{display:flex;gap:clamp(1rem,4vw,2.6rem);margin-top:.4rem}
+.countdown div{display:grid;gap:.35rem;justify-items:center}
+.countdown span{
+  font-family:var(--serif);font-size:clamp(1.5rem,5.5vw,2.5rem);
+  color:#f2f7fc;line-height:1;text-shadow:0 0 24px rgba(200,225,250,.35);
+}
+.countdown small{
+  font-family:var(--sans);font-size:.6rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+/* Botones */
+.btn{
+  font-family:var(--sans);font-size:.7rem;letter-spacing:.24em;
+  text-transform:uppercase;padding:1em 2.2em;border-radius:999px;
+  cursor:pointer;border:1px solid transparent;transition:.28s ease;
+}
+.btn.solid{
+  background:linear-gradient(180deg,#f8fcff,#dbe7f3);color:#13253d;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+.btn.solid:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(0,0,0,.45)}
+.btn.ghost{background:transparent;border-color:rgba(200,212,224,.5);color:var(--ink)}
+.btn.ghost:hover{border-color:rgba(230,240,250,.85);background:rgba(255,255,255,.05)}
+
+/* =========================================================
+   SECCIONES
+   ========================================================= */
+.block{position:relative;padding:clamp(4rem,10vh,7rem) 0;background:linear-gradient(180deg,#07152b,#0a1a33 60%,#07152b)}
+.block .wrap{
+  width:min(1040px,90vw);margin-inline:auto;
+  display:grid;gap:1.3rem;justify-items:center;text-align:center;
+}
+h2{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(1.45rem,4vw,2.2rem);letter-spacing:.05em}
+.prose{
+  margin:0;max-width:60ch;font-family:var(--body);
+  font-size:clamp(1.02rem,2.2vw,1.18rem);line-height:1.85;color:#c9d9ea;
+}
+
+.cards{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1rem,2.4vw,1.8rem);width:100%;margin-top:.8rem;
+}
+.card{
+  display:grid;gap:.6rem;padding:clamp(1.4rem,3vw,2rem);text-align:left;
+  border:1px solid rgba(200,212,224,.22);border-radius:12px;
+  background:linear-gradient(170deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
+  color:inherit;text-decoration:none;transition:.35s ease;
+}
+.card:hover{
+  transform:translateY(-4px);border-color:rgba(220,232,244,.45);
+  background:linear-gradient(170deg,rgba(255,255,255,.09),rgba(255,255,255,.02));
+}
+.card .label{
+  font-family:var(--sans);font-size:.6rem;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--muted);
+}
+.card h3{margin:0;font-family:var(--serif);font-weight:400;font-size:1.22rem;letter-spacing:.04em}
+.card p{margin:0;font-family:var(--body);font-size:1rem;line-height:1.7;color:#b9cbdd}
+.card .go{font-family:var(--sans);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:#e6eef7}
+
+/* Cita final */
+.quote{
+  margin:0;max-width:54ch;font-family:var(--body);font-style:italic;
+  font-size:clamp(1.12rem,3vw,1.5rem);line-height:1.72;color:#dbe8f6;
+}
+.quote cite{
+  display:block;margin-top:1rem;font-style:normal;font-family:var(--sans);
+  font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+}
+
+footer{
+  padding:3rem 1rem 4rem;text-align:center;
+  border-top:1px solid rgba(200,212,224,.14);background:#050d1c;
+}
+footer .mono{font-family:var(--serif);font-size:1.05rem;letter-spacing:.22em;color:#dbe7f3}
+footer p{margin:.8rem 0 0;font-family:var(--sans);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:#7f94aa}
+
+/* Aparición al hacer scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* =========================================================
+   VENTANA DE CONFIRMACIÓN (RSVP)
+   ========================================================= */
+.modal{
+  position:fixed;inset:0;z-index:90;display:grid;place-items:center;
+  background:rgba(4,10,22,.8);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .3s ease;padding:1.25rem;
+}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-card{
+  position:relative;width:min(480px,100%);
+  padding:clamp(1.6rem,4vw,2.4rem);
+  border:1px solid rgba(200,212,224,.25);border-radius:12px;
+  background:linear-gradient(170deg,#0f2649,#0a1a33);
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+  display:grid;gap:1.1rem;
+}
+.modal-card h2{font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.3}
+.modal-card .label{
+  margin:0;font-family:var(--sans);font-size:.6rem;
+  letter-spacing:.36em;text-transform:uppercase;color:var(--muted);
+}
+.modal-close{
+  position:absolute;top:.55rem;right:.9rem;background:none;border:none;
+  color:#8ea4ba;font-size:1.5rem;line-height:1;cursor:pointer;transition:color .2s;
+}
+.modal-close:hover{color:#e6eef7}
+.rsvp-choice{display:grid;gap:.7rem}
+.rsvp-form{display:grid;gap:.6rem}
+.rsvp-form label{
+  font-family:var(--sans);font-size:.62rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--muted);
+}
+.rsvp-form input{
+  width:100%;padding:.9em 1em;border-radius:8px;
+  border:1px solid rgba(200,212,224,.35);
+  background:rgba(255,255,255,.06);color:var(--ink);
+  font-family:var(--sans);font-size:.95rem;
+}
+.rsvp-form input:focus{
+  outline:none;border-color:#dbe7f3;box-shadow:0 0 0 3px rgba(219,231,243,.15);
+}
+.tiny{margin:0;font-family:var(--sans);font-size:.66rem;color:#8ea4ba}
+.rsvp-thanks p{
+  margin:0;font-family:var(--body);font-size:1.12rem;
+  line-height:1.7;color:#dbe8f6;
+}
+
+/* =========================================================
+   RESPONSIVE Y ACCESIBILIDAD
+   ========================================================= */
+@media (max-width:700px){
+  .cards{grid-template-columns:1fr}
+  .envelope{height:min(520px,66vh)}
+  .seal{width:112px;height:112px}
+  .seal .monogram{font-size:1.7rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}
+</style>
 </head>
 <body>
-    <h1>El sitio está en construcción</h1>
-    <p>Pronto verás aquí la invitación de Laura & Marcos.</p>
+
+<!-- ===================== PORTADA: EL SOBRE ===================== -->
+<div class="intro" id="intro">
+  <div class="stars" id="starsIntro" aria-hidden="true"></div>
+
+  <div class="envelope" id="envelope">
+    <div class="half left"></div>
+    <div class="half right"></div>
+
+    <!-- Constelación fina sobre el papel -->
+    <svg class="constel" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
+      <g fill="none" stroke="#8fa6bd" stroke-width=".7" opacity=".75">
+        <path d="M52 92 L118 148 L96 236 L170 292 L150 392 L232 452"/>
+        <path d="M348 78 L300 154 L332 214 L268 262 L296 352 L214 402"/>
+        <path d="M118 148 L300 154"/>
+        <path d="M96 236 L332 214"/>
+        <path d="M170 292 L268 262"/>
+        <path d="M150 392 L296 352"/>
+      </g>
+      <g fill="#7d95ad">
+        <circle cx="52" cy="92" r="2.2"/><circle cx="118" cy="148" r="1.6"/>
+        <circle cx="96" cy="236" r="2"/><circle cx="170" cy="292" r="1.6"/>
+        <circle cx="150" cy="392" r="2.2"/><circle cx="232" cy="452" r="1.6"/>
+        <circle cx="348" cy="78" r="2"/><circle cx="300" cy="154" r="1.6"/>
+        <circle cx="332" cy="214" r="2.2"/><circle cx="268" cy="262" r="1.6"/>
+        <circle cx="296" cy="352" r="2"/><circle cx="214" cy="402" r="1.6"/>
+      </g>
+    </svg>
+
+    <button class="seal" id="seal" aria-label="Presiona el sello para abrir la invitación">
+      <span class="monogram">L<span class="amp">&amp;</span>M</span>
+    </button>
+  </div>
+
+  <div class="glow" id="glow" aria-hidden="true"></div>
+  <p class="hint" id="hint">Presiona el sello</p>
+</div>
+
+<!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="stars" id="starsHero" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow fade">Nos casamos</p>
+      <h1 class="names fade">Laura <span class="amp">&amp;</span> Marcos</h1>
+
+      <p class="verse fade">
+        «Por esto dejará el hombre a su padre y a su madre, y se unirá a su mujer,
+        y los dos serán una sola carne. Grande es este misterio; mas yo digo esto
+        respecto de Cristo y de la iglesia.»
+        <span>Efesios 5:31–32</span>
+      </p>
+
+      <div class="rule fade"></div>
+
+      <p class="date fade">Sábado, 19 de junio de 2027 · 4:00 p. m.</p>
+      <p class="place fade">Lugar por confirmar · La Habana, Cuba</p>
+
+      <div class="countdown fade" id="countdown" aria-label="Cuenta regresiva para la boda">
+        <div><span id="cd-d">--</span><small>Días</small></div>
+        <div><span id="cd-h">--</span><small>Horas</small></div>
+        <div><span id="cd-m">--</span><small>Minutos</small></div>
+        <div><span id="cd-s">--</span><small>Segundos</small></div>
+      </div>
+
+      <button class="btn solid fade" id="openRsvp" type="button">Confirmar asistencia</button>
+    </div>
+  </section>
+
+  <!-- EL SENTIDO DEL DÍA -->
+  <section class="block">
+    <div class="wrap reveal">
+      <p class="eyebrow">El sentido de este día</p>
+      <h2>Un pacto bajo el mismo cielo</h2>
+      <p class="prose">
+        No nos casamos solo para celebrar nuestro amor, sino para reflejar uno mayor.
+        Como escribió Tim Keller, el matrimonio existe para mostrar el amor fiel de Cristo
+        por su iglesia; y como dice John Piper, es la exhibición del pacto entre Cristo y su pueblo.
+        Por eso este día no es nuestro, sino suyo: queremos que, al vernos, se vea un destello
+        del evangelio.
+      </p>
+
+      <div class="cards">
+        <a class="card" href="significado.html">
+          <span class="label">Capítulo I</span>
+          <h3>El significado</h3>
+          <p>Lo que la Biblia enseña sobre el matrimonio y por qué lo vivimos como un reflejo del amor de Dios.</p>
+          <span class="go">Leer →</span>
+        </a>
+        <a class="card" href="nuestra-historia.html">
+          <span class="label">Capítulo II</span>
+          <h3>Nuestra historia</h3>
+          <p>Momentos del día a día, fotos y pensamientos que nos han traído hasta aquí.</p>
+          <span class="go">Ver galería →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITA FINAL -->
+  <section class="block">
+    <div class="wrap reveal">
+      <blockquote class="quote">
+        «El secreto del matrimonio es reflexionar sobre el amor del Señor por nosotros
+        e imitar ese amor suyo.»
+        <cite>Tim Keller · El significado del matrimonio</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <footer>
+    <div class="mono">L &amp; M</div>
+    <p>Un pacto bajo el mismo cielo</p>
+  </footer>
+</main>
+
+<!-- ===================== CONFIRMACIÓN (RSVP) ===================== -->
+<div class="modal" id="rsvp" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="rsvpTitle">
+    <button class="modal-close" id="rsvpClose" type="button" aria-label="Cerrar">×</button>
+    <p class="label">Confirmación</p>
+    <h2 id="rsvpTitle">¿Nos acompañarás en este día?</h2>
+
+    <div class="rsvp-choice" id="rsvpChoice">
+      <button class="btn solid" type="button" data-answer="si">Sí, asistiré</button>
+      <button class="btn ghost" type="button" data-answer="no">No podré asistir</button>
+    </div>
+
+    <form class="rsvp-form" id="rsvpForm" hidden>
+      <label for="rsvpName">Tu nombre completo</label>
+      <input id="rsvpName" name="name" type="text" maxlength="80"
+             autocomplete="name" placeholder="Nombre y apellido" required>
+      <button class="btn solid" type="submit">Enviar confirmación</button>
+      <p class="tiny">Tu respuesta se guarda en este dispositivo.</p>
+    </form>
+
+    <div class="rsvp-thanks" id="rsvpThanks" hidden>
+      <p id="thanksText"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   1. FECHA DE LA BODA  →  cámbiala aquí
+   ========================================================= */
+const WEDDING_DATE = new Date('2027-06-19T16:00:00-04:00').getTime();
+
+/* =========================================================
+   2. ESTRELLAS
+   ========================================================= */
+function paintStars(box, count, maxSize = 2.2){
+  if(!box) return;
+  const frag = document.createDocumentFragment();
+  for(let i = 0; i < count; i++){
+    const s = document.createElement('span');
+    const size = (Math.random() * maxSize + 0.6).toFixed(2);
+    s.style.left = (Math.random() * 100).toFixed(2) + '%';
+    s.style.top = (Math.random() * 100).toFixed(2) + '%';
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.animationDuration = (Math.random() * 4 + 3).toFixed(2) + 's';
+    s.style.animationDelay = (Math.random() * 6).toFixed(2) + 's';
+    frag.appendChild(s);
+  }
+  box.appendChild(frag);
+}
+paintStars(document.getElementById('starsIntro'), 90);
+paintStars(document.getElementById('starsHero'), 60, 1.7);
+
+/* =========================================================
+   3. PORTADA: ABRIR EL SOBRE
+   ========================================================= */
+const intro = document.getElementById('intro');
+const seal  = document.getElementById('seal');
+const hint  = document.getElementById('hint');
+const glow  = document.getElementById('glow');
+
+document.body.classList.add('locked');
+
+/* Si ya la abrió en esta visita, no se repite la animación */
+if(sessionStorage.getItem('lm-intro') === 'seen'){
+  intro.style.display = 'none';
+  document.body.classList.remove('locked');
+  document.body.classList.add('revealed');
+}else{
+  seal.addEventListener('click', () => {
+    sessionStorage.setItem('lm-intro', 'seen');
+    intro.classList.add('opening');
+    hint.classList.add('off');
+
+    setTimeout(() => glow.classList.add('on'), 420);
+    setTimeout(() => document.body.classList.add('revealed'), 1450);
+    setTimeout(() => intro.classList.add('gone'), 1750);
+    setTimeout(() => {
+      intro.style.display = 'none';
+      document.body.classList.remove('locked');
+    }, 2750);
+  }, { once:true });
+}
+
+/* =========================================================
+   4. CUENTA REGRESIVA
+   ========================================================= */
+const cd = {
+  d: document.getElementById('cd-d'),
+  h: document.getElementById('cd-h'),
+  m: document.getElementById('cd-m'),
+  s: document.getElementById('cd-s')
+};
+function tickCountdown(){
+  let diff = WEDDING_DATE - Date.now();
+  if(diff < 0) diff = 0;
+  const sec = Math.floor(diff / 1000);
+  cd.d.textContent = String(Math.floor(sec / 86400)).padStart(2, '0');
+  cd.h.textContent = String(Math.floor((sec % 86400) / 3600)).padStart(2, '0');
+  cd.m.textContent = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+  cd.s.textContent = String(sec % 60).padStart(2, '0');
+}
+tickCountdown();
+setInterval(tickCountdown, 1000);
+
+/* =========================================================
+   5. CONFIRMACIÓN (RSVP)
+   ========================================================= */
+const modal      = document.getElementById('rsvp');
+const rsvpChoice = document.getElementById('rsvpChoice');
+const rsvpForm   = document.getElementById('rsvpForm');
+const rsvpThanks = document.getElementById('rsvpThanks');
+const thanksText = document.getElementById('thanksText');
+const nameInput  = document.getElementById('rsvpName');
+
+function showThanks(answer, name){
+  rsvpChoice.hidden = true;
+  rsvpForm.hidden   = true;
+  rsvpThanks.hidden = false;
+  thanksText.textContent = answer === 'si'
+    ? `¡Gracias, ${name}! Nos alegra muchísimo contar contigo.`
+    : 'Gracias por avisarnos. Te tendremos presente en nuestras oraciones.';
+}
+
+function openModal(){
+  const saved = JSON.parse(localStorage.getItem('lm-rsvp') || 'null');
+  if(saved){
+    rsvpChoice.hidden = true;
+    rsvpForm.hidden   = true;
+    rsvpThanks.hidden = false;
+    showThanks(saved.answer, saved.name);
+  }else{
+    rsvpChoice.hidden = false;
+    rsvpForm.hidden   = true;
+    rsvpThanks.hidden = true;
+  }
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('locked');
+}
+
+function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('locked');
+}
+
+document.getElementById('openRsvp').addEventListener('click', openModal);
+document.getElementById('rsvpClose').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+});
+
+rsvpChoice.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const answer = btn.dataset.answer;
+    if(answer === 'no'){
+      localStorage.setItem('lm-rsvp', JSON.stringify({ answer:'no', name:'' }));
+      showThanks('no');
+    }else{
+      rsvpChoice.hidden = true;
+      rsvpForm.hidden   = false;
+      nameInput.focus();
+    }
+  });
+});
+
+rsvpForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = nameInput.value.trim();
+  if(!name) return;
+  localStorage.setItem('lm-rsvp', JSON.stringify({ answer:'si', name }));
+  showThanks('si', name);
+});
+
+/* =========================================================
+   6. APARICIÓN AL HACER SCROLL
+   ========================================================= */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold:.15 });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 </body>
 </html>
