@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuestra historia · Laura &amp; Marcos</title>
+<meta name="description" content="Galería de fotos y pensamientos de Laura y Marcos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0a1730; --night-2:#0c1e3c; --deep:#102a4f;
+  --ink:#eef6ff; --muted:#a7bcd4; --silver:#d5e1ee;
+  --serif:'Cinzel',Georgia,serif;
+  --display:'Playfair Display','Cormorant Garamond',Georgia,serif;
+  --body:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--night)}
+body{
+  margin:0;font-family:var(--sans);background:var(--night);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+
+/* ===== FONDO CONTINUO (mismo esquema que la principal) ===== */
+.page-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.page-bg img{
+  width:100%;height:100%;object-fit:cover;object-position:center 42%;
+  filter:saturate(.92) contrast(1.03) brightness(.8);
+  transform:scale(1.05);
+}
+.page-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(10,23,48,.55) 0%,
+    rgba(12,30,60,.7) 45%,
+    rgba(10,23,48,.88) 100%);
+}
+.main{position:relative;z-index:1}
+
+/* ===== CABECERA DE LA PÁGINA ===== */
+.story-head{
+  min-height:70svh;display:grid;place-items:center;text-align:center;
+  padding:clamp(4rem,10vh,7rem) 1.25rem 2rem;position:relative;
+}
+.story-head .wrap{max-width:860px;display:grid;gap:1.1rem;justify-items:center}
+.kicker{
+  margin:0;font-family:var(--sans);font-size:.72rem;letter-spacing:.48em;
+  text-transform:uppercase;color:#b7cadd;
+}
+.story-head h1{
+  margin:0;font-family:var(--display);font-weight:500;
+  font-size:clamp(2.4rem,8vw,4.6rem);line-height:1.08;letter-spacing:.02em;
+  background-image:linear-gradient(178deg,#ffffff 0%,#f4f9ff 30%,#cfe0f0 62%,#eef6ff 85%,#b9cee3 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.5))
+         drop-shadow(0 2px 1px rgba(70,100,135,.45))
+         drop-shadow(0 16px 30px rgba(0,0,0,.5));
+}
+.story-head p.lead{
+  margin:0;font-family:var(--body);font-style:italic;
+  font-size:clamp(1.05rem,2.4vw,1.25rem);color:#cfdff0;max-width:52ch;
+}
+.rule{
+  position:relative;width:140px;height:1px;margin-top:.4rem;
+  background:linear-gradient(90deg,transparent,rgba(213,225,238,.85),transparent);
+}
+.rule::after{
+  content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  background:#d5e1ee;opacity:.8;
+}
+
+/* ===== GALERÍA EN COLUMNA ===== */
+.gallery{
+  width:min(960px,92vw);margin:0 auto;
+  padding:clamp(2rem,6vh,4rem) 0 clamp(5rem,12vh,8rem);
+  display:grid;gap:clamp(2rem,6vh,4rem);
+}
+
+/* Cada bloque: encabezado opcional + 1 o varias fotos */
+.moment{display:grid;gap:clamp(1rem,3vh,1.6rem)}
+.moment-head{
+  display:grid;gap:.5rem;justify-items:start;
+  padding-left:.2rem;
+}
+.moment-head .label{
+  font-family:var(--sans);font-size:.62rem;letter-spacing:.4em;
+  text-transform:uppercase;color:#9fb4ca;
+}
+.moment-head h2{
+  margin:0;font-family:var(--display);font-weight:500;
+  font-size:clamp(1.5rem,4.2vw,2.2rem);line-height:1.18;letter-spacing:.01em;
+  color:#f2f8ff;
+  text-shadow:0 1px 0 rgba(255,255,255,.25),0 12px 28px rgba(0,0,0,.45);
+}
+.moment-head .caption{
+  margin:0;max-width:64ch;font-family:var(--body);
+  font-size:clamp(1.02rem,2.2vw,1.18rem);line-height:1.85;color:#c6d8ea;
+}
+
+/* Fotos: marco fino plateado + sombra suave, como en las invitaciones */
+.photo{
+  position:relative;border-radius:10px;overflow:hidden;
+  border:1px solid rgba(213,225,238,.28);
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.06) inset;
+  background:#0a1730;
+}
+.photo img{
+  width:100%;height:auto;display:block;
+  transition:transform 1.2s ease, filter 1.2s ease;
+  filter:saturate(.98) contrast(1.02);
+}
+.photo:hover img{transform:scale(1.03);filter:saturate(1.05) contrast(1.04)}
+.photo::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 60px rgba(10,23,48,.35);
+  border-radius:10px;
+}
+
+/* Fotos dobles (bloque 2 y 16-17): se apilan con un pequeño aire */
+.photo-duo{display:grid;gap:clamp(1rem,3vh,1.6rem)}
+
+/* Aparición al hacer scroll */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 1s ease,transform 1s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== PIE DE PÁGINA ===== */
+.story-foot{
+  padding:3rem 1rem 4rem;text-align:center;
+  border-top:1px solid rgba(213,225,238,.14);
+  background:rgba(6,14,30,.55);backdrop-filter:blur(2px);
+}
+.story-foot .mono{font-family:var(--display);font-size:1.1rem;letter-spacing:.24em;color:#dbe7f3}
+.story-foot p{margin:.85rem 0 0;font-family:var(--sans);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:#8ba1b8}
+.back{
+  display:inline-block;margin-top:1.4rem;font-family:var(--sans);
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:#dbe7f3;text-decoration:none;border-bottom:1px solid rgba(213,225,238,.4);
+  padding-bottom:.25em;transition:.3s;
+}
+.back:hover{color:#fff;border-color:#fff}
+
+@media (max-width:700px){
+  .gallery{gap:2rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<main class="main">
+
+  <!-- Fondo continuo: usa una foto tuya o la misma que en la principal -->
+  <div class="page-bg" aria-hidden="true">
+    <img src="IMG_5593.JPG" alt=""
+         onerror="console.warn('No cargó la foto de fondo:', this.src)">
+  </div>
+
+  <!-- CABECERA -->
+  <header class="story-head">
+    <div class="wrap">
+      <p class="kicker">Capítulo II · Nuestra historia</p>
+      <h1>Momentos que nos trajeron hasta aquí</h1>
+      <p class="lead">
+        No hay una sola foto que cuente todo, pero sí muchas que,
+        juntas, dicen quiénes somos y de dónde venimos.
+      </p>
+      <div class="rule" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <!-- GALERÍA -->
+  <section class="gallery" aria-label="Galería de nuestra historia">
+
+    <!-- 1 -->
+    <article class="moment reveal">
+      <div class="moment-head">
+        <span class="label">Donde todo comenzó</span>
+        <h2>Nosotros</h2>
+      </div>
+      <figure class="photo">
+        <img src="IMG_2658_comprimida.jpg" alt="Laura y Marcos juntos por primera vez en una foto" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 2 -->
+    <article class="moment reveal">
+      <div class="moment-head">
+        <span class="label">Un instante robado</span>
+        <h2>Tomada sin pedir permiso</h2>
+      </div>
+      <div class="photo-duo">
+        <figure class="photo">
+          <img src="segunda_foto_comprimida.jpg" alt="Foto espontánea de Laura y Marcos" loading="lazy">
+        </figure>
+        <figure class="photo">
+          <img src="IMG_5836.jpg" alt="Segunda foto espontánea de la pareja" loading="lazy">
+        </figure>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_1879.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 4 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_4478.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 5 -->
+    <article class="moment reveal">
+      <div class="moment-head">
+        <span class="label">Un solo corazón</span>
+        <h2>❤️</h2>
+      </div>
+      <figure class="photo">
+        <img src="IMG_1970.jpg" alt="Foto de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 6 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_4578.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 7 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_4580.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 8 — Te conocí en una guagua -->
+    <article class="moment reveal">
+      <div class="moment-head">
+        <span class="label">Historia · La guagua</span>
+        <h2>Te conocí en una guagua</h2>
+        <p class="caption">
+          La rutina diaria de viajar al trabajo empezaba a gustarme por los minutos
+          que te tenía cerca. Así que los días en que no coincidíamos eran realmente
+          días perdidos. Pocos sospecharían de mis verdaderas motivaciones “laborales”;
+          y mucho menos de la complicidad de Transmetro. Todo estaba en perfecta
+          coordinación para nuestro encuentro. Mi asiento ya tenía tu nombre, y la guagua
+          se encargaba de colocarnos a un “ven para aquí” de distancia (aunque en realidad
+          me buscabas desde que subías). Entonces te desplazabas entre cuerpos apretujados,
+          y, con una sonrisa, me quitabas el lugar y me dejabas varado en aquel montón
+          de gente. Aun así salía ganando: aunque perdía el asiento, obtenía tu sonrisa,
+          algunas miradas, y a veces cuando bajabas me dejabas un beso. Hay que reconocer
+          que, en algún que otro caso, planeábamos el momento, pero, ¿qué sería de
+          nosotros sin esa guagua de Transmetro?
+        </p>
+      </div>
+      <figure class="photo">
+        <img src="IMG_2728.JPG" alt="Foto de la pareja en la etapa de la guagua" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 9 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_5224.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 10 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_6680.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 11 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="c374d24a-35f8-40f5-98f4-64cdaf58533e.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 12 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_6887.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 13 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7277.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 14 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7398.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 15 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="e4dc8b37-4a0d-4d09-b7ea-28cf02dea3a2.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 16 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7542.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 17 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7541.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 18 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7486.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 19 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7534.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 20 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7891.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+    <!-- 22 -->
+    <article class="moment reveal">
+      <figure class="photo">
+        <img src="IMG_7908.jpg" alt="Momento de la pareja" loading="lazy">
+      </figure>
+    </article>
+
+  </section>
+
+  <footer class="story-foot">
+    <div class="mono">L &amp; M</div>
+    <p>Un pacto bajo el mismo cielo</p>
+    <a class="back" href="index.html">← Volver a la invitación</a>
+  </footer>
+
+</main>
+
+<script>
+/* Aparición de cada bloque al hacer scroll */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold:.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
