@@ -25,19 +25,19 @@ body{
 }
 img{max-width:100%;display:block}
 
-/* ===== FONDO CONTINUO (mismo esquema que la principal) ===== */
-.page-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.page-bg img{
-  width:100%;height:100%;object-fit:cover;object-position:center 42%;
-  filter:saturate(.92) contrast(1.03) brightness(.8);
-  transform:scale(1.05);
+/* Fondo simple: azul noche con un degradado suave */
+.page-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 50% 0%, #1c4272 0%, #122c52 45%, #0a1730 100%);
 }
+/* Un velo sutil para dar profundidad sin foto */
 .page-bg::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,
-    rgba(10,23,48,.55) 0%,
-    rgba(12,30,60,.7) 45%,
-    rgba(10,23,48,.88) 100%);
+    rgba(10,23,48,.15) 0%,
+    rgba(12,30,60,.35) 50%,
+    rgba(10,23,48,.65) 100%);
 }
 .main{position:relative;z-index:1}
 
@@ -160,11 +160,6 @@ img{max-width:100%;display:block}
 
 <main class="main">
 
-  <!-- Fondo continuo: usa una foto tuya o la misma que en la principal -->
-  <div class="page-bg" aria-hidden="true">
-    <img src="IMG_5593.JPG" alt=""
-         onerror="console.warn('No cargó la foto de fondo:', this.src)">
-  </div>
 
   <!-- CABECERA -->
   <header class="story-head">
